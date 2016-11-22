@@ -19,8 +19,9 @@ Licensed under the MIT license
 			return this;
 		}
 
-		// define default parameters
+		// define default parameter
 		var defaults = {
+			unitsType: 'metric',
 			descriptionTarget: null,
 			maxTemperatureTarget: null,
 			minTemperatureTarget: null,
@@ -61,7 +62,7 @@ Licensed under the MIT license
 		var s = plugin.settings;
 
 		// define basic api endpoint
-		apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang;
+		apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.unitsType;
 
 		// if city isn't null
 		if(s.city != null) {
