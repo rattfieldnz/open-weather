@@ -132,7 +132,7 @@ Licensed under the MIT license
 			success: function(data) {
 
 				// if units are 'f'
-				if(s.units == 'f') {
+				if(s.units == 'f' && s.unitsType == 'imperial') {
 
 					// define temperature as fahrenheit
 					var temperature = Math.round(((data.main.temp - 273.15) * 1.8) + 32) + '°F';
@@ -143,7 +143,7 @@ Licensed under the MIT license
 					// define max temperature as fahrenheit
 					var maxTemperature = Math.round(((data.main.temp_max - 273.15) * 1.8) + 32) + '°F';
 
-				} else {
+				} else if(s.units == 'c' && s.unitsType == 'metric'){
 
 					// define temperature as celsius
 					var temperature = Math.round(data.main.temp - 273.15) + '°C';
@@ -153,6 +153,17 @@ Licensed under the MIT license
 
 					// define max temperature as celsius
 					var maxTemperature = Math.round(data.main.temp_max - 273.15) + '°C';
+				}
+				else if(s.units == 'k' && s.unitsType == 'standard'){
+
+					// define temperature as celsius
+					var temperature = Math.round(data.main.temp) + '°K';
+
+					// define min temperature as celsius
+					var minTemperature = Math.round(data.main.temp_min) + '°K';
+
+					// define max temperature as celsius
+					var maxTemperature = Math.round(data.main.temp_max) + '°K';
 				}
 
 				// set temperature
