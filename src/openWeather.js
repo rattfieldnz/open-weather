@@ -25,7 +25,7 @@ Licensed under the MIT license
 			maxTemperatureTarget: null,
 			minTemperatureTarget: null,
 			windSpeedTarget: null,
-			windDirection: null,
+			windDirectionTarget: null,
 			humidityTarget: null,
 			sunriseTarget: null,
 			sunsetTarget: null,
@@ -263,10 +263,10 @@ Licensed under the MIT license
 				}
 				
 				// if windDirection isn't null
-				if(s.windDirection != null){
+				if(s.windDirectionTarget != null){
 					
 					// set wind direction
-					$(s.windDirection).text(data.wind.deg);
+					$(s.windDirectionTarget).text(data.wind.deg);
 				}
 
 				// if humidityTarget isn't null
