@@ -67,7 +67,7 @@ Initialize the plugin targeting the class, ID or element that you've created wit
 
 ```js
 $('.weather-temperature').openWeather({
-	city: 'Toronto,ON'
+	city: 'Dunedin,NZ'
 });
 ```
 	
@@ -109,7 +109,7 @@ Place your custom icons inside the "day" and "night" directories and initialize 
 
 ```js
 $('.weather-temperature').openWeather({
-	city: 'Toronto,ON',
+	city: 'Dunedin,NZ',
 	customIcons: '/img/icons/weather/'
 });
 ```
@@ -202,7 +202,7 @@ $(function() {
 
     $('.weather-temperature').openWeather({
         lang: 'ru',
-        city: 'Toronto, ON',
+        city: 'Dunedin,NZ',
         placeTarget: '.weather-place',
         units: 'metric',
         descriptionTarget: '.weather-description',
