@@ -1,320 +1,326 @@
 /*!
 
-Name: Open Weather
-Dependencies: jQuery, OpenWeatherMap API
-Author: Michael Lynch
-Author URL: http://michaelynch.com
-Date Created: August 28, 2013
-Licensed under the MIT license
+ Name: Open Weather
+ Dependencies: jQuery, OpenWeatherMap API
+ Author: Michael Lynch
+ Author URL: http://michaelynch.com
+ Date Created: August 28, 2013
+ Licensed under the MIT license
 
-*/
+ */
 
 ;(function($) {
 
-	$.fn.openWeather  = function(options) {
+    $.fn.openWeather  = function(options) {
 
-		// return if no element was bound
-		// so chained events can continue
-		if(!this.length) {
-			return this;
-		}
+        // return if no element was bound
+        // so chained events can continue
+        if(!this.length) {
+            return this;
+        }
 
-		// define default parameter
-		var defaults = {
-			unitsType: 'metric',
-			descriptionTarget: null,
-			maxTemperatureTarget: null,
-			minTemperatureTarget: null,
-			windSpeedTarget: null,
-			windDirectionTarget: null,
-			humidityTarget: null,
-			sunriseTarget: null,
-			sunsetTarget: null,
-			placeTarget: null,
-			iconTarget: null,
-			customIcons: null,
-			units: 'c',
-			city: null,
-			lat: null,
-			lng: null,
-			key: null,
-			lang: 'en',
-			success: function() {},
-			error: function(message) {}
-		}
+        // define default parameter
+        var defaults = {
+            descriptionTarget: null,
+            maxTemperatureTarget: null,
+            minTemperatureTarget: null,
+            windSpeedTarget: null,
+            windDirectionTarget: null,
+            humidityTarget: null,
+            sunriseTarget: null,
+            sunsetTarget: null,
+            placeTarget: null,
+            iconTarget: null,
+            customIcons: null,
+            units: 'metric',
+            city: null,
+            lat: null,
+            lng: null,
+            key: null,
+            lang: 'en',
+            success: function() {},
+            error: function(message) {}
+        }
 
-		// define plugin
-		var plugin = this;
+        // define plugin
+        var plugin = this;
 
-		// define element
-		var el = $(this);
+        // define element
+        var el = $(this);
 
-		// api URL
-		var apiURL;
+        // api URL
+        var apiURL;
 
-		// define settings
-		plugin.settings = {}
+        // define settings
+        plugin.settings = {};
 
-		// merge defaults and options
-		plugin.settings = $.extend({}, defaults, options);
+        // merge defaults and options
+        plugin.settings = $.extend({}, defaults, options);
 
-		// define settings namespace
-		var s = plugin.settings;
+        // define settings namespace
+        var s = plugin.settings;
 
-		// define basic api endpoint
-		apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.unitsType;
+        // define basic api endpoint
+        apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.unitsType;
 
-		// if city isn't null
-		if(s.city != null) {
+        // if city isn't null
+        if(s.city != null) {
 
-		// define API url using city (and remove any spaces in city)
-		apiURL += '&q='+s.city.replace(' ', '');
+            // define API url using city (and remove any spaces in city)
+            apiURL += '&q='+s.city.replace(' ', '');
 
-		} else if(s.lat != null && s.lng != null) {
+        } else if(s.lat != null && s.lng != null) {
 
-			// define API url using lat and lng
-			apiURL += '&lat='+s.lat+'&lon='+s.lng;
-		}
+            // define API url using lat and lng
+            apiURL += '&lat='+s.lat+'&lon='+s.lng;
+        }
 
-		// if api key was supplied
-		if(s.key != null) {
+        // if api key was supplied
+        if(s.key != null) {
 
-			// append api key paramater
-			apiURL += '&appid=' + s.key;
+            // append api key paramater
+            apiURL += '&appid=' + s.key;
 
-		}
+        }
 
-		// format time function
-		var formatTime = function(unixTimestamp) {
+        // format time function
+        var formatTime = function(unixTimestamp) {
 
-			// define milliseconds using unix time stamp
-			var milliseconds = unixTimestamp * 1000;
+            // define milliseconds using unix time stamp
+            var milliseconds = unixTimestamp * 1000;
 
-			// create a new date using milliseconds
-			var date = new Date(milliseconds);
+            // create a new date using milliseconds
+            var date = new Date(milliseconds);
 
-			// define hours
-			var hours = date.getHours();
+            // define hours
+            var hours = date.getHours();
 
-			// if hours are greater than 12
-			if(hours > 12) {
+            // if hours are greater than 12
+            if(hours > 12) {
 
-				// calculate remaining hours in the day
-				hoursRemaining = 24 - hours;
+                // calculate remaining hours in the day
+                hoursRemaining = 24 - hours;
 
-				// define hours as the reamining hours subtracted from a 12 hour day
-				hours = 12 - hoursRemaining;
-			}
+                // define hours as the reamining hours subtracted from a 12 hour day
+                hours = 12 - hoursRemaining;
+            }
 
-			// define minutes
-			var minutes = date.getMinutes();
+            // define minutes
+            var minutes = date.getMinutes();
 
-			// convert minutes to a string
-			minutes = minutes.toString();
+            // convert minutes to a string
+            minutes = minutes.toString();
 
-			// if minutes has less than 2 characters
-			if(minutes.length < 2) {
+            // if minutes has less than 2 characters
+            if(minutes.length < 2) {
 
-				// add a 0 to minutes
-				minutes = 0 + minutes;
-			}
+                // add a 0 to minutes
+                minutes = 0 + minutes;
+            }
 
-			// construct time using hours and minutes
-			var time = hours + ':' + minutes;
+            // construct time using hours and minutes
+            var time = hours + ':' + minutes;
 
-			return time;
-		}
+            return time;
+        }
 
-		$.ajax({
-			type: 'GET',
-			url: apiURL,
-			dataType: 'jsonp',
-			success: function(data) {
+        $.ajax({
+            type: 'GET',
+            url: apiURL,
+            dataType: 'jsonp',
+            success: function(data) {
 
-				// if units are 'f'
-				if(s.units == 'f' && s.unitsType == 'imperial') {
+                var temperature;
+                var minTemperature;
+                var maxTemperature;
 
-					// define temperature as fahrenheit
-					var temperature = Math.round(((data.main.temp - 273.15) * 1.8) + 32) + '°F';
+                //Imperial measurements use Fahrenheit for temperature.
+                if(s.units  == 'imperial') {
 
-					// define min temperature as fahrenheit
-					var minTemperature = Math.round(((data.main.temp_min - 273.15) * 1.8) + 32) + '°F';
+                    // define temperature as fahrenheit
+                    temperature = Math.round(data.main.temp) + '°F';
 
-					// define max temperature as fahrenheit
-					var maxTemperature = Math.round(((data.main.temp_max - 273.15) * 1.8) + 32) + '°F';
+                    // define min temperature as fahrenheit
+                    minTemperature = Math.round(data.main.temp_min) + '°F';
 
-				} else if(s.units == 'c' && s.unitsType == 'metric'){
+                    // define max temperature as fahrenheit
+                    maxTemperature = Math.round(data.main.temp_max) + '°F';
 
-					// define temperature as celsius
-					var temperature = Math.round(data.main.temp - 273.15) + '°C';
+                }
+                //Metric measurements use Centigrade/Celsius for temperature.
+                else if(s.unitsType == 'metric'){
 
-					// define min temperature as celsius
-					var minTemperature = Math.round(data.main.temp_min - 273.15) + '°C';
+                    // define temperature as celsius
+                    temperature = Math.round(data.main.temp) + '°C';
 
-					// define max temperature as celsius
-					var maxTemperature = Math.round(data.main.temp_max - 273.15) + '°C';
-				}
-				else if(s.units == 'k' && s.unitsType == 'standard'){
+                    // define min temperature as celsius
+                    minTemperature = Math.round(data.main.temp_min) + '°C';
 
-					// define temperature as celsius
-					var temperature = Math.round(data.main.temp) + '°K';
+                    // define max temperature as celsius
+                    maxTemperature = Math.round(data.main.temp_max) + '°C';
+                }
+                //The standard temperature from the API uses Kelvin by default.
+                else{
 
-					// define min temperature as celsius
-					var minTemperature = Math.round(data.main.temp_min) + '°K';
+                    // define temperature as kelvin
+                    temperature = Math.round(data.main.temp) + '°K';
 
-					// define max temperature as celsius
-					var maxTemperature = Math.round(data.main.temp_max) + '°K';
-				}
+                    // define min temperature as kelvin
+                    minTemperature = Math.round(data.main.temp_min) + '°K';
 
-				// set temperature
-				el.html(temperature);
+                    // define max temperature as kelvin
+                    maxTemperature = Math.round(data.main.temp_max) + '°K';
+                }
 
-				// if minTemperatureTarget isn't null
-				if(s.minTemperatureTarget != null) {
+                // set temperature
+                el.html(temperature);
 
-					// set minimum temperature
-					$(s.minTemperatureTarget).text(minTemperature);
-				}
+                // if minTemperatureTarget isn't null
+                if(s.minTemperatureTarget != null) {
 
-				// if maxTemperatureTarget isn't null
-				if(s.maxTemperatureTarget != null) {
+                    // set minimum temperature
+                    $(s.minTemperatureTarget).text(minTemperature);
+                }
 
-					// set maximum temperature
-					$(s.maxTemperatureTarget).text(maxTemperature);
-				}
+                // if maxTemperatureTarget isn't null
+                if(s.maxTemperatureTarget != null) {
 
-				// set weather description
-				$(s.descriptionTarget).text(data.weather[0].description);
+                    // set maximum temperature
+                    $(s.maxTemperatureTarget).text(maxTemperature);
+                }
 
-				// if iconTarget and default weather icon aren't null
-				if(s.iconTarget != null && data.weather[0].icon != null) {
+                // set weather description
+                $(s.descriptionTarget).text(data.weather[0].description);
 
-					// if customIcons isn't null
-					if(s.customIcons != null) {
+                // if iconTarget and default weather icon aren't null
+                if(s.iconTarget != null && data.weather[0].icon != null) {
 
-						// define the default icon name
-						var defaultIconFileName = data.weather[0].icon;
+                    // if customIcons isn't null
+                    if(s.customIcons != null) {
 
-						var iconName;
+                        // define the default icon name
+                        var defaultIconFileName = data.weather[0].icon;
 
-						var timeOfDay;
+                        var iconName;
 
-						// if default icon name contains the letter 'd'
-						if(defaultIconFileName.indexOf('d') != -1) {
+                        var timeOfDay;
 
-							// define time of day as day
-							timeOfDay = 'day';
+                        // if default icon name contains the letter 'd'
+                        if(defaultIconFileName.indexOf('d') != -1) {
 
-						} else {
+                            // define time of day as day
+                            timeOfDay = 'day';
 
-							// define time of day as night
-							timeOfDay = 'night';
-						}
+                        } else {
 
-						// if icon is clear sky
-						if(defaultIconFileName == '01d' || defaultIconFileName == '01n') {
+                            // define time of day as night
+                            timeOfDay = 'night';
+                        }
 
-							iconName = 'clear';
-						}
+                        // if icon is clear sky
+                        if(defaultIconFileName == '01d' || defaultIconFileName == '01n') {
 
-						// if icon is clouds
-						if(defaultIconFileName == '02d' || defaultIconFileName == '02n' || defaultIconFileName == '03d' || defaultIconFileName == '03n' || defaultIconFileName == '04d' || defaultIconFileName == '04n') {
+                            iconName = 'clear';
+                        }
 
-							iconName = 'clouds';
-						}
+                        // if icon is clouds
+                        if(defaultIconFileName == '02d' || defaultIconFileName == '02n' || defaultIconFileName == '03d' || defaultIconFileName == '03n' || defaultIconFileName == '04d' || defaultIconFileName == '04n') {
 
-						// if icon is rain
-						if(defaultIconFileName == '09d' || defaultIconFileName == '09n' || defaultIconFileName == '10d' || defaultIconFileName == '10n') {
+                            iconName = 'clouds';
+                        }
 
-							iconName = 'rain';
-						}
+                        // if icon is rain
+                        if(defaultIconFileName == '09d' || defaultIconFileName == '09n' || defaultIconFileName == '10d' || defaultIconFileName == '10n') {
 
-						// if icon is thunderstorm
-						if(defaultIconFileName == '11d' || defaultIconFileName == '11n') {
+                            iconName = 'rain';
+                        }
 
-							iconName = 'storm';
-						}
+                        // if icon is thunderstorm
+                        if(defaultIconFileName == '11d' || defaultIconFileName == '11n') {
 
-						// if icon is snow
-						if(defaultIconFileName == '13d' || defaultIconFileName == '13n') {
+                            iconName = 'storm';
+                        }
 
-							iconName = 'snow';
-						}
+                        // if icon is snow
+                        if(defaultIconFileName == '13d' || defaultIconFileName == '13n') {
 
-						// if icon is mist
-						if(defaultIconFileName == '50d' || defaultIconFileName == '50n') {
+                            iconName = 'snow';
+                        }
 
-							iconName = 'mist';
-						}
+                        // if icon is mist
+                        if(defaultIconFileName == '50d' || defaultIconFileName == '50n') {
 
-						// define custom icon URL
-						var iconURL = s.customIcons+timeOfDay+'/'+iconName+'.png';
+                            iconName = 'mist';
+                        }
 
-					} else {
+                        // define custom icon URL
+                        var iconURL = s.customIcons+timeOfDay+'/'+iconName+'.png';
 
-						// define icon URL using default icon
-						var iconURL = 'http://openweathermap.org/img/w/'+data.weather[0].icon+'.png';
-					}
+                    } else {
 
-					// set iconTarget src attribute as iconURL
-					$(s.iconTarget).attr('src', iconURL);
-				}
+                        // define icon URL using default icon
+                        var iconURL = 'http://openweathermap.org/img/w/'+data.weather[0].icon+'.png';
+                    }
 
-				// if placeTarget isn't null
-				if(s.placeTarget != null) {
+                    // set iconTarget src attribute as iconURL
+                    $(s.iconTarget).attr('src', iconURL);
+                }
 
-					// set humidity
-					$(s.placeTarget).text(data.name + ', ' + data.sys.country);
-				}
+                // if placeTarget isn't null
+                if(s.placeTarget != null) {
 
-				// if windSpeedTarget isn't null
-				if(s.windSpeedTarget != null) {
+                    // set humidity
+                    $(s.placeTarget).text(data.name + ', ' + data.sys.country);
+                }
 
-					// set wind speed
-					$(s.windSpeedTarget).text(Math.round(data.wind.speed) + ' Mps');
-				}
-				
-				// if windDirection isn't null
-				if(s.windDirectionTarget != null){
-					
-					// set wind direction
-					$(s.windDirectionTarget).text(data.wind.deg);
-				}
+                // if windSpeedTarget isn't null
+                if(s.windSpeedTarget != null) {
 
-				// if humidityTarget isn't null
-				if(s.humidityTarget != null) {
+                    // set wind speed
+                    $(s.windSpeedTarget).text(Math.round(data.wind.speed) + ' Mps');
+                }
 
-					// set humidity
-					$(s.humidityTarget).text(data.main.humidity + '%');
-				}
+                // if windDirection isn't null
+                if(s.windDirectionTarget != null){
 
-				// if sunriseTarget isn't null
-				if(s.sunriseTarget != null) {
+                    // set wind direction
+                    $(s.windDirectionTarget).text(data.wind.deg);
+                }
 
-					var sunrise = formatTime(data.sys.sunrise);
+                // if humidityTarget isn't null
+                if(s.humidityTarget != null) {
 
-					// set humidity
-					$(s.sunriseTarget).text(sunrise + ' AM');
-				}
+                    // set humidity
+                    $(s.humidityTarget).text(data.main.humidity + '%');
+                }
 
-				// if sunriseTarget isn't null
-				if(s.sunsetTarget != null) {
+                // if sunriseTarget isn't null
+                if(s.sunriseTarget != null) {
 
-					var sunset = formatTime(data.sys.sunset);
+                    var sunrise = formatTime(data.sys.sunrise);
 
-					// set humidity
-					$(s.sunsetTarget).text(sunset + ' PM');
-				}
+                    // set humidity
+                    $(s.sunriseTarget).text(sunrise + ' AM');
+                }
 
-				// run success callback
-				s.success.call(this);
-			},
+                // if sunriseTarget isn't null
+                if(s.sunsetTarget != null) {
 
-			error: function(jqXHR, textStatus, errorThrown) {
+                    var sunset = formatTime(data.sys.sunset);
 
-				// run error callback
-				s.error.call(this, textStatus);
-			}
-		});
-	}
+                    // set humidity
+                    $(s.sunsetTarget).text(sunset + ' PM');
+                }
+
+                // run success callback
+                s.success.call(this);
+            },
+
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                // run error callback
+                s.error.call(this, textStatus);
+            }
+        });
+    }
 })(jQuery);
