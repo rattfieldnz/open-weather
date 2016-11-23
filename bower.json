@@ -1,11 +1,12 @@
 {
-  "name": "open-weather",
-  "version": "1.2.0",
-  "homepage": "https://github.com/michael-lynch/open-weather",
+  "name": "open-weather-updated",
+  "version": "1.2.1",
+  "homepage": "https://github.com/rattfieldnz/open-weather",
   "authors": [
-    "Michael Lynch <michael@teehanlax.com>"
+    "Michael Lynch <michael@teehanlax.com>",
+    "Robert Attfield <emailme@robertattfield.com>"
   ],
-  "description": "A simple, lightweight jQuery plugin used to display the current weather of any city using the free OpenWeatherMap API.",
+  "description": "A simple, lightweight jQuery plugin used to display the current weather of any city using the free OpenWeatherMap API. Forked from Michael Lynch @ https://github.com/michael-lynch/open-weather.",
   "main": "build/openWeather.min.js",
   "keywords": [
     "open",
