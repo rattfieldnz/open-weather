@@ -10,13 +10,50 @@ This plugin allows you to display the location, the current temperature, the cur
 
 ##Instructions
 
+###Install via Bower
+
+You can install this package by executing the following in your shell:
+
+```
+bower install open-weather-updated
+```
+
+Note: the original project from Michael Lynch can be installed using the following command:
+
+```
+bower install open-weather
+```
+
+The package will install in 'bower_components' directory, unless specified by your .bowerrc file.
+
+If installing the script via Bower, include the script, along with JQuery like so:
+
+```html
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
+```
+
+If you have installed JQuery with Bower, including the script could look like so:
+
+```html
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
+```
+
+###Install Manually
+
+Download and extract this repository to the root of your web application. 
+
+For example, if I was to take this approach,I would download this repository to a 'js/libraries' folder.
+
 Include jQuery and the plugin in the head or footer of your page.
 
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
-<script src="/js/plugins/openWeather.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="/js/libraries/open-weather-updated/build/openWeather.min.js"></script>
 ```
+
+###Basic Use
 
 The only default output is the current temperature.
 
