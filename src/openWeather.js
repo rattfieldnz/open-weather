@@ -33,6 +33,7 @@
             iconTarget: null,
             customIcons: null,
             units: 'metric',
+            windSpeedUnit: 'Kph',
             city: null,
             lat: null,
             lng: null,
@@ -40,7 +41,7 @@
             lang: 'en',
             success: function() {},
             error: function(message) {}
-        }
+        };
 
         // define plugin
         var plugin = this;
@@ -134,6 +135,7 @@
                 var temperatureUnit;
                 var minTemperature;
                 var maxTemperature;
+                var speedMeasurementUnit = "Mph";
 
                 switch(s.units){
                     case 'imperial':
@@ -143,6 +145,7 @@
                     case 'metric':
                         //Metric measurements use Centigrade/Celsius for temperature.
                         temperatureUnit = '°C';
+                        speedMeasurementUnit = "Kph";
                         break;
                     case 'standard':
                         //The standard temperature from the API uses Kelvin by default.
@@ -261,8 +264,24 @@
                 // if windSpeedTarget isn't null
                 if(s.windSpeedTarget != null) {
 
+                    var windSpeed;
+
+                    //Default speed from API is in meters per second (mps).
+                    switch(s.windSpeedUnit){
+                        case 'mps':
+                            windSpeed = Math.round(data.wind.speed) + ' ' + s.windSpeedUnit;
+                            break;
+                        case 'Mph':
+                            windSpeed = Math.round(data.wind.speed / 0.44704) + ' ' + s.windSpeedUnit;
+                            break;
+                        case 'Kph':
+                            //No break termination, as this is the default.
+                            windSpeed = Math.round(data.wind.speed * 3.6) + ' ' + s.windSpeedUnit;
+                    }
+
+
                     // set wind speed
-                    $(s.windSpeedTarget).text(Math.round(data.wind.speed) + ' Mps');
+                    $(s.windSpeedTarget).text(windSpeed);
                 }
 
                 // if windDirection isn't null
