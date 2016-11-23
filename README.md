@@ -106,8 +106,8 @@ $('.weather-temperature').openWeather({
 <br />A string that defines the ID, class or element that will contain the location name (default: null).
 </p>
 
-<p><em>units: "c / f"</em>
-<br />A string that defines the type of units (default: 'c').
+<p><em>units: "metric / imperial / standard"</em>
+<br />A string that defines the type of units (default: 'metric'). These measurement units are also the pre-defined API defaults.
 </p>
 
 <p><em>descriptionTarget: "id / class / element"</em>
@@ -126,6 +126,10 @@ $('.weather-temperature').openWeather({
 <br />A string that defines the ID, class or element that will contain the wind speed (default: null).
 </p>
 
+<p><em>windSpeedUnit: "Kph / Mph / mps"</em>
+<br />A string that defines the unit to measure wind speed (default: Kph).
+</p>
+
 <p><em>humidityTarget: "id / class / element"</em>
 <br />A string that defines the ID, class or element that will contain the humidity (default: null).
 </p>
@@ -142,7 +146,7 @@ $('.weather-temperature').openWeather({
 <br />A string that defines the ID, class or element that will contain the icon image (default: null).
 </p>
 
-<p>customIcons: "path"</em>
+<p><em>customIcons: "path"</em>
 <br />A string that defines the path to the custom icons (default: null).
 </p>
 
@@ -159,27 +163,28 @@ $('.weather-temperature').openWeather({
 ```js
 $(function() {
 
-	$('.weather-temperature').openWeather({
-		lang: 'ru',
-		city: 'Toronto, ON',
-		placeTarget: '.weather-place',
-		units: 'f',
-		descriptionTarget: '.weather-description',
-		minTemperatureTarget: '.weather-min-temperature',
-		maxTemperatureTarget: '.weather-max-temperature',
-		windSpeedTarget: '.weather-wind-speed',
-		humidityTarget: '.weather-humidity',
-		sunriseTarget: '.weather-sunrise',
-		sunsetTarget: '.weather-sunset',
-		iconTarget: '.weather-icon',
-		customIcons: '/img/icons/weather/',
-		success: function() {
-			$('.weather-temperature').show();
-		},
-		error: function(message) {
-			console.log(message);
-		}
-	});
-	
+    $('.weather-temperature').openWeather({
+        lang: 'ru',
+        city: 'Toronto, ON',
+        placeTarget: '.weather-place',
+        units: 'metric',
+        descriptionTarget: '.weather-description',
+        minTemperatureTarget: '.weather-min-temperature',
+        maxTemperatureTarget: '.weather-max-temperature',
+        windSpeedTarget: '.weather-wind-speed',
+        windSpeedUnit: 'Kph',
+        humidityTarget: '.weather-humidity',
+        sunriseTarget: '.weather-sunrise',
+        sunsetTarget: '.weather-sunset',
+        iconTarget: '.weather-icon',
+        customIcons: '/img/icons/weather/',
+        success: function() {
+            $('.weather-temperature').show();
+        },
+        error: function(message) {
+            console.log(message);
+        }
+    });
+
 });
 ```
