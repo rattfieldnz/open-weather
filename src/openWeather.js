@@ -61,7 +61,7 @@
         var s = plugin.settings;
 
         // define basic api endpoint
-        apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.unitsType;
+        apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.units;
 
         // if city isn't null
         if(s.city != null) {
@@ -129,48 +129,33 @@
             url: apiURL,
             dataType: 'jsonp',
             success: function(data) {
-
+                console.log(apiURL);
                 var temperature;
+                var temperatureUnit;
                 var minTemperature;
                 var maxTemperature;
 
-                //Imperial measurements use Fahrenheit for temperature.
-                if(s.units  == 'imperial') {
-
-                    // define temperature as fahrenheit
-                    temperature = Math.round(data.main.temp) + '°F';
-
-                    // define min temperature as fahrenheit
-                    minTemperature = Math.round(data.main.temp_min) + '°F';
-
-                    // define max temperature as fahrenheit
-                    maxTemperature = Math.round(data.main.temp_max) + '°F';
+                switch(s.units){
+                    case 'imperial':
+                        //Imperial measurements use Fahrenheit for temperature.
+                        temperatureUnit = '°F';
+                        break;
+                    case 'metric':
+                        //Metric measurements use Centigrade/Celsius for temperature.
+                        temperatureUnit = '°C';
+                        break;
+                    case 'standard':
+                        //The standard temperature from the API uses Kelvin by default.
+                        temperatureUnit = '°K';
+                        break;
+                    default:
+                        temperatureUnit = '°K';
 
                 }
-                //Metric measurements use Centigrade/Celsius for temperature.
-                else if(s.unitsType == 'metric'){
 
-                    // define temperature as celsius
-                    temperature = Math.round(data.main.temp) + '°C';
-
-                    // define min temperature as celsius
-                    minTemperature = Math.round(data.main.temp_min) + '°C';
-
-                    // define max temperature as celsius
-                    maxTemperature = Math.round(data.main.temp_max) + '°C';
-                }
-                //The standard temperature from the API uses Kelvin by default.
-                else{
-
-                    // define temperature as kelvin
-                    temperature = Math.round(data.main.temp) + '°K';
-
-                    // define min temperature as kelvin
-                    minTemperature = Math.round(data.main.temp_min) + '°K';
-
-                    // define max temperature as kelvin
-                    maxTemperature = Math.round(data.main.temp_max) + '°K';
-                }
+                temperature = Math.round(data.main.temp) + temperatureUnit;
+                minTemperature = Math.round(data.main.temp_min) + temperatureUnit;
+                maxTemperature = Math.round(data.main.temp_max) + temperatureUnit;
 
                 // set temperature
                 el.html(temperature);
