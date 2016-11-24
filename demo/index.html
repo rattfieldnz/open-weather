@@ -40,6 +40,9 @@
 		
 		<p><strong>Wind speed</strong>
 		<br /><span class="weather-wind-speed"></span></p>
+
+		<p><strong>Wind direction</strong>
+		<br /><span class="weather-wind-direction"></span></p>
 		
 		<p><strong>Sunrise</strong>
 		<br /><span class="weather-sunrise"></span></p>
@@ -49,13 +52,7 @@
 	
 	</div>
 	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-	<script type="text/javascript">
-	if (typeof jQuery == 'undefined') {
-	    document.write(unescape("%3Cscript src='src/js/lib/jquery.1.9.1.min.js' type='text/javascript'%3E%3C/script%3E"));
-	}
-	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	
 	<script src="../src/openWeather.js"></script>
 	
@@ -64,29 +61,28 @@
 		$(function() {
 		
 			$('.weather-temperature').openWeather({
-				key: 'c9d49310f8023ee2617a7634de23c2aa',
-				city: 'Toronto, ON',
-				descriptionTarget: '.weather-description',
-				windSpeedTarget: '.weather-wind-speed',
-				minTemperatureTarget: '.weather-min-temperature',
-				maxTemperatureTarget: '.weather-max-temperature',
-				humidityTarget: '.weather-humidity',
-				sunriseTarget: '.weather-sunrise',
-				sunsetTarget: '.weather-sunset',
-				placeTarget: '.weather-place',
-				iconTarget: '.weather-icon',
-				customIcons: '../src/img/icons/weather/',
-				success: function() {
-				
-					//show weather
-					$('.weather-wrapper').show();
-					
-				},
-				error: function(message) {
-				
-					console.log(message);
-				
-				}
+				key: '27bb2c32da00b682f1fe4b3e2764cfe5',
+                units: 'metric',
+                lang: 'en',
+                city: 'Dunedin,NZ',
+                placeTarget: '.weather-place',
+                descriptionTarget: '.weather-description',
+                minTemperatureTarget: '.weather-min-temperature',
+                maxTemperatureTarget: '.weather-max-temperature',
+                windSpeedTarget: '.weather-wind-speed',
+                windSpeedUnit: 'Kph',
+                windDirectionUnit: 'compass',
+                windDirectionTarget: '.weather-wind-direction',
+                humidityTarget: '.weather-humidity',
+                iconTarget: '.weather-icon',
+                customIcons: '/img/icons/weather/',
+                success: function() {
+
+                    $('.weather-wrapper').show();
+                },
+                error: function(message) {
+                    console.log(message);
+                }
 			});
 			
 		});
