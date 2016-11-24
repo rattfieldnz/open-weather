@@ -41,6 +41,7 @@
             lng: null,
             key: null,
             lang: 'en',
+            timeLastUpdatedTarget: null,
             success: function() {},
             error: function(message) {}
         };
@@ -392,6 +393,17 @@
 
                     // set humidity
                     $(s.sunsetTarget).text(sunset + ' PM');
+                }
+
+                // if timeLastUpdatedTarget isn't null
+                if(s.timeLastUpdatedTarget != null){
+                    var timeLastUpdated = formatTime(data.dt);
+
+                    if(parseInt(timeLastUpdated.substring(0, timeLastUpdated.indexOf(':'))) > 11){
+                        timeLastUpdated += ' PM'
+                    }
+                    timeLastUpdated += ' AM';
+                    $(s.timeLastUpdatedTarget).text(timeLastUpdated);
                 }
 
                 // run success callback

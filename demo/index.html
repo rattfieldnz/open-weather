@@ -36,6 +36,9 @@
 		
 		<p><strong>Sunset</strong>
 		<br /><span class="weather-sunset"></span></p>
+
+		<p><strong>Time last updated</strong>
+		<br /><span class="weather-time-last-updated"></span></p>
 	
 	</div>
 	
@@ -62,6 +65,7 @@
                 humidityTarget: '.weather-humidity',
                 iconTarget: '.weather-icon',
                 customIcons: '/img/icons/weather/',
+                timeLastUpdatedTarget: '.weather-time-last-updated',
                 success: function() {
                     $('.weather-wrapper').show();
                 },
