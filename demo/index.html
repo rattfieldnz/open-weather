@@ -1,31 +1,18 @@
 <!doctype html>
-
 <html>
-
 <head>
-
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
 	<meta charset="utf-8">
-
 	<title>Open Weather jQuery Plugin</title>
-	
 	<meta name="description" content="A simple, lightweight jQuery plugin used to display the current weather of any city using the free OpenWeatherMap API.">
-	
 	<meta name="author" content="http://michaelynch.com">
-
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	
 	<link rel="stylesheet" type="text/css" media="screen" href="../src/css/style.css">
-	
 </head>
-
 <body lang="en">
-
 	<div class="weather-wrapper hide">
 
 		<img src="" class="weather-icon" alt="Weather Icon" />
-		
 		<p><strong>Place</strong>
 		<br /><span class="weather-place"></span></p>
 		
@@ -53,13 +40,9 @@
 	</div>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	
 	<script src="../src/openWeather.js"></script>
-	
 	<script>
-	
 		$(function() {
-		
 			$('.weather-temperature').openWeather({
 				key: '27bb2c32da00b682f1fe4b3e2764cfe5',
                 units: 'metric',
@@ -77,16 +60,13 @@
                 iconTarget: '.weather-icon',
                 customIcons: '/img/icons/weather/',
                 success: function() {
-
                     $('.weather-wrapper').show();
                 },
                 error: function(message) {
                     console.log(message);
                 }
 			});
-			
 		});
-	
 	</script>
 
 </body>
