@@ -179,6 +179,11 @@ $('.weather-temperature').openWeather({
 <br />Available units are 'degrees' and 'compass'.
 </p>
 
+<p><em>clickConvertTemperature: "true / false"</em>
+<br />A boolean which enables wind direction to be converted when clicked.
+<br />Available units are Celsius (metric), Fahrenheit (imperial), Kelvin (standard).
+</p>
+
 <p><em>clickConvertWindSpeed: "true / false"</em>
 <br />A boolean which enables wind speed measurement to be converted when clicked.
 <br />Available units are 'Mph', 'Kph', and 'mps' (meters per second).
@@ -228,6 +233,7 @@ $(function() {
         windSpeedTarget: '.weather-wind-speed',
         windSpeedUnit: 'Kph',
         windDirectionUnit: 'compass',
+        clickConvertTemperature: true,
         clickConvertWindDirection: true,
         clickConvertWindSpeed: true,
         windDirectionTarget: '.weather-wind-direction',

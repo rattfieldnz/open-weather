@@ -33,7 +33,7 @@
             units: 'metric',
             windSpeedUnit: 'Kph',
             windDirectionUnit: 'compass',
-            //clickConvertTemperature: true,
+            clickConvertTemperature: true,
             clickConvertWindDirection: true,
             clickConvertWindSpeed: true,
             city: null,
@@ -134,47 +134,55 @@
             success: function(data) {
                 console.log(apiURL);
                 var temperature;
-                var temperatureUnit;
                 var minTemperature;
                 var maxTemperature;
 
-                switch(s.units){
-                    case 'imperial':
-                        //Imperial measurements use Fahrenheit for temperature.
-                        temperatureUnit = '°F';
-                        break;
-                    case 'metric':
-                        //Metric measurements use Centigrade/Celsius for temperature.
-                        temperatureUnit = '°C';
-                        break;
-                    case 'standard':
-                        //The standard temperature from the API uses Kelvin by default.
-                        temperatureUnit = '°K';
-                        break;
-                    default:
-                        temperatureUnit = '°K';
-
-                }
-
-                temperature = Math.round(data.main.temp) + temperatureUnit;
-                minTemperature = Math.round(data.main.temp_min) + temperatureUnit;
-                maxTemperature = Math.round(data.main.temp_max) + temperatureUnit;
+                temperature = Math.round(data.main.temp) + temperatureUnit(s.units);
+                minTemperature = Math.round(data.main.temp_min) + temperatureUnit(s.units);
+                maxTemperature = Math.round(data.main.temp_max) + temperatureUnit(s.units);
 
                 // set temperature
                 el.html(temperature);
+
+                if(s.clickConvertTemperature == true){
+
+                    var convertTemperatureClickCount = 0;
+
+                    var temperatureMeasurements = ['metric', 'imperial', 'standard'];
+
+                    // Get numerical temperature value - substring to remove temperature units.
+                    // el is the element target where the temperature is displayed.
+                    var currentTemperature = $(el).text().substring(0, $(el).text().length - 2);
+                    maxTemperature = parseFloat(maxTemperature.substring(0, maxTemperature.length - 2));
+                    minTemperature = parseFloat(minTemperature.substring(0, minTemperature.length - 2));
+
+                    $(el).on('click', function(){
+                        convertTemperatureClickCount++;
+
+                        var newTemperatureUnit = temperatureMeasurements[convertTemperatureClickCount % temperatureMeasurements.length];
+                        var newTemperature = convertTemperature(s.units, newTemperatureUnit, currentTemperature);
+
+                        var newMaxTemperature = convertTemperature(s.units, newTemperatureUnit, maxTemperature);
+                        var newMinTemperature = convertTemperature(s.units, newTemperatureUnit, minTemperature);
+
+                        $(el).text(newTemperature);
+                        $(s.minTemperatureTarget).text(newMinTemperature);
+                        $(s.maxTemperatureTarget).text(newMaxTemperature);
+                    });
+                }
 
                 // if minTemperatureTarget isn't null
                 if(s.minTemperatureTarget != null) {
 
                     // set minimum temperature
-                    $(s.minTemperatureTarget).text(minTemperature);
+                    $(s.minTemperatureTarget).text(minTemperature + temperatureUnit(s.units));
                 }
 
                 // if maxTemperatureTarget isn't null
                 if(s.maxTemperatureTarget != null) {
 
                     // set maximum temperature
-                    $(s.maxTemperatureTarget).text(maxTemperature);
+                    $(s.maxTemperatureTarget).text(maxTemperature + temperatureUnit(s.units));
                 }
 
                 // set weather description
@@ -279,16 +287,15 @@
                             windSpeed = (data.wind.speed * 3.6);
                     }
 
-
                     // set wind speed
-                    $(s.windSpeedTarget).text(windSpeed.toFixed(1) + ' ' + s.windSpeedUnit);
+                    $(s.windSpeedTarget).text(parseFloat(windSpeed.toFixed(1)) + ' ' + s.windSpeedUnit);
 
                     if(s.clickConvertWindSpeed == true){
 
                         var convertWindSpeedClickCount = 0;
 
-                        //Using slice to remove units from value.
-                        var currentWindSpeedValue = $(s.windSpeedTarget).text().substring(0, 2);
+                        //Using substring to remove units from value.
+                        var currentWindSpeedValue = parseFloat($(s.windSpeedTarget).text().substring(0, 4));
                         var windSpeedUnits = ['Kph','Mph','mps'];
 
                         $(s.windSpeedTarget).on('click', function(e){
@@ -306,9 +313,6 @@
 
                     // set wind direction
                     var windDirection = data.wind.deg;
-
-                    // The 16 general compass directions
-                    var compassDirections = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
 
                     if(s.windDirectionUnit === 'degrees') {
                         $(s.windDirectionTarget).text(windDirection.toFixed(1) + '°');
@@ -387,7 +391,13 @@
         });
 
 
-
+        /**
+         * A function to convert wind speed.
+         * @param {String} unitFrom The original measurement unit.
+         * @param {String} unitTo The new measurement unit.
+         * @param {Number} value The wind speed measurement to be converted.
+         * @returns {String} The converted wind speed measurement.
+         */
         function convertWindSpeed(unitFrom, unitTo, value) {
 
             if(value == null){
@@ -418,8 +428,58 @@
                     return value + ' ' + unitFrom;
                 }
 
-                return windSpeed.toFixed(1)  + ' ' + unitTo;
+                return parseFloat(windSpeed.toFixed(1))  + ' ' + unitTo;
             }
+        }
+
+        function convertTemperature(unitFrom, unitTo, value){
+
+            if(value == null){
+                return null;
+            }
+            else{
+                var temperature;
+
+                value = parseInt(value);
+
+                // Fahrenheit to Celsius
+                if(unitFrom === 'imperial' && unitTo === 'metric'){
+
+                    temperature = ((value - 32) / 1.8);
+                }
+                // Celsius to Fahrenheit
+                else if(unitFrom === 'metric' && unitTo === 'imperial'){
+                    temperature = ((value * 1.8) + 32);
+                }
+                // Kelvin to Fahrenheit
+                else if(unitFrom === 'standard' && unitTo === 'imperial'){
+                    temperature = ((value * 1.8) - 459.67);
+                }
+                // Fahrenheit to Kelvin
+                else if(unitFrom === 'imperial' && unitTo === 'standard'){
+                    temperature = ((value + 459.67)*(5/9));
+                }
+                // Celsius to Kelvin
+                else if(unitFrom === 'metric' && unitTo === 'standard'){
+                    temperature = (value + 273.15);
+                }
+                // Kelvin to Celsius
+                else if(unitFrom === 'standard' && unitTo === 'metric'){
+                    temperature = (value - 273.15);
+                }
+                else if(unitFrom === 'metric' && unitTo === 'metric' ||
+                    unitFrom === 'standard' && unitTo === 'standard' ||
+                    unitFrom === 'imperial' && unitTo === 'imperial'){
+                    return value + temperatureUnit(unitTo);;
+                }
+                else{
+                    return parseFloat(value.toFixed(1)) + temperatureUnit(unitFrom);
+                }
+                if(temperature !== 'undefined') {
+                    return parseFloat(temperature.toFixed(1)) + temperatureUnit(unitTo);
+                }
+            }
+
         }
 
         /**
@@ -444,6 +504,32 @@
                 }
             }
             return null;
+        }
+
+        /**
+         * A function to return temperature unit from measurement definition.
+         * @param {String} measurement Measurement definition ('metric', 'imperial', 'standard').
+         * @returns {String} The temperature unit.
+         */
+        function temperatureUnit(measurement){
+            var unit;
+            if(measurement == null){
+                return null;
+            }
+            else{
+                switch(measurement){
+                    case 'metric':
+                        unit = '°C';
+                        break;
+                    case 'imperial':
+                        unit = '°F';
+                        break;
+                    case 'standard':
+                        unit = '°K';
+                        break;
+                }
+                return unit;
+            }
         }
     }
 
