@@ -92,45 +92,20 @@
         }
 
         // format time function
-        var formatTime = function(unixTimestamp) {
-
+        var formatAMPM = function(unixTimestamp) {
             // define milliseconds using unix time stamp
             var milliseconds = unixTimestamp * 1000;
 
             // create a new date using milliseconds
             var date = new Date(milliseconds);
-
-            // define hours
             var hours = date.getHours();
-
-            // if hours are greater than 12
-            if(hours > 12) {
-
-                // calculate remaining hours in the day
-                hoursRemaining = 24 - hours;
-
-                // define hours as the reamining hours subtracted from a 12 hour day
-                hours = 12 - hoursRemaining;
-            }
-
-            // define minutes
             var minutes = date.getMinutes();
-
-            // convert minutes to a string
-            minutes = minutes.toString();
-
-            // if minutes has less than 2 characters
-            if(minutes.length < 2) {
-
-                // add a 0 to minutes
-                minutes = 0 + minutes;
-            }
-
-            // construct time using hours and minutes
-            var time = hours + ':' + minutes;
-
-            return time;
-        }
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            return hours + ':' + minutes + ' ' + ampm;
+        };
 
         $.ajax({
             type: 'GET',
@@ -380,29 +355,25 @@
                 // if sunriseTarget isn't null
                 if(s.sunriseTarget != null) {
 
-                    var sunrise = formatTime(data.sys.sunrise);
+                    var sunrise = formatAMPM(data.sys.sunrise);
 
                     // set humidity
-                    $(s.sunriseTarget).text(sunrise + ' AM');
+                    $(s.sunriseTarget).text(sunrise);
                 }
 
                 // if sunriseTarget isn't null
                 if(s.sunsetTarget != null) {
 
-                    var sunset = formatTime(data.sys.sunset);
+                    var sunset = formatAMPM(data.sys.sunset);
 
                     // set humidity
-                    $(s.sunsetTarget).text(sunset + ' PM');
+                    $(s.sunsetTarget).text(sunset);
                 }
 
                 // if timeLastUpdatedTarget isn't null
                 if(s.timeLastUpdatedTarget != null){
-                    var timeLastUpdated = formatTime(data.dt);
+                    var timeLastUpdated = formatAMPM(data.dt);
 
-                    if(parseInt(timeLastUpdated.substring(0, timeLastUpdated.indexOf(':'))) > 11){
-                        timeLastUpdated += ' PM'
-                    }
-                    timeLastUpdated += ' AM';
                     $(s.timeLastUpdatedTarget).text(timeLastUpdated);
                 }
 
