@@ -18,6 +18,10 @@ You can install this package by executing the following in your shell:
 bower install open-weather-updated
 ```
 
+The above will install the latest package version. 
+
+Please view the available tags to see relevant versions. To see the tags, click on the 'Branch: master' dropdown, then click on the 'Tags' tab - the latest version will be the first tag at the top.
+
 Note: the original project from Michael Lynch can be installed using the following command:
 
 ```
