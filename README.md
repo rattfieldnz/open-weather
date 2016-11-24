@@ -167,6 +167,23 @@ $('.weather-temperature').openWeather({
 <br />A string that defines the unit to measure wind speed (default: Kph).
 </p>
 
+<p><em>windDirectionUnit: "degrees / compass"</em>
+<br />A string that defines the unit to measure wind direction (default: compass).
+<br />The compass directions will display one of these below:
+<br />
+<br />N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW.
+</p>
+
+<p><em>clickConvertWindDirection: "true / false"</em>
+<br />A boolean which enables wind direction to be converted when clicked.
+<br />Available units are 'degrees' and 'compass'.
+</p>
+
+<p><em>clickConvertWindSpeed: "true / false"</em>
+<br />A boolean which enables wind speed measurement to be converted when clicked.
+<br />Available units are 'Mph', 'Kph', and 'mps' (meters per second).
+</p>
+
 <p><em>humidityTarget: "id / class / element"</em>
 <br />A string that defines the ID, class or element that will contain the humidity (default: null).
 </p>
@@ -199,29 +216,30 @@ $('.weather-temperature').openWeather({
 
 ```js
 $(function() {
-
     $('.weather-temperature').openWeather({
-        lang: 'ru',
+        key: '27bb2c32da00b682f1fe4b3e2764cfe5',
+        units: 'metric',
+        lang: 'en',
         city: 'Dunedin,NZ',
         placeTarget: '.weather-place',
-        units: 'metric',
         descriptionTarget: '.weather-description',
         minTemperatureTarget: '.weather-min-temperature',
         maxTemperatureTarget: '.weather-max-temperature',
         windSpeedTarget: '.weather-wind-speed',
         windSpeedUnit: 'Kph',
+        windDirectionUnit: 'compass',
+        clickConvertWindDirection: true,
+        clickConvertWindSpeed: true,
+        windDirectionTarget: '.weather-wind-direction',
         humidityTarget: '.weather-humidity',
-        sunriseTarget: '.weather-sunrise',
-        sunsetTarget: '.weather-sunset',
         iconTarget: '.weather-icon',
         customIcons: '/img/icons/weather/',
         success: function() {
-            $('.weather-temperature').show();
+            $('.weather-wrapper').show();
         },
         error: function(message) {
             console.log(message);
         }
     });
-
 });
 ```

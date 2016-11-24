@@ -34,7 +34,7 @@
             windSpeedUnit: 'Kph',
             windDirectionUnit: 'compass',
             //clickConvertTemperature: true,
-            //clickConvertWindDirection: true,
+            clickConvertWindDirection: true,
             clickConvertWindSpeed: true,
             city: null,
             lat: null,
@@ -294,10 +294,7 @@
                         $(s.windSpeedTarget).on('click', function(e){
                             convertWindSpeedClickCount++;
                             var newWindSpeedUnit = windSpeedUnits[convertWindSpeedClickCount % windSpeedUnits.length];
-                            var newSpeed;
-
-
-                            newSpeed = convertWindSpeed(s.windSpeedUnit, newWindSpeedUnit, currentWindSpeedValue);
+                            var newSpeed = convertWindSpeed(s.windSpeedUnit, newWindSpeedUnit, currentWindSpeedValue);
                             $(s.windSpeedTarget).text(newSpeed);
 
                         });
@@ -310,28 +307,46 @@
                     // set wind direction
                     var windDirection = data.wind.deg;
 
+                    // The 16 general compass directions
+                    var compassDirections = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+
                     if(s.windDirectionUnit === 'degrees') {
                         $(s.windDirectionTarget).text(windDirection.toFixed(1) + '°');
                     }
                     if(s.windDirectionUnit === 'compass'){
-
-                        // The 16 general compass directions
-                        var compassDirections = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
-
                         // There are 16 general compass directions.
                         // Dividing 360 by 16 equals 22.5.
                         // 0.5 is added to prevent ties.
-                        var directionIndex = null;
                         if($.isNumeric(windDirection))
                         {
                             if(windDirection >=0){
-                                directionIndex=+Math.round(((windDirection/22.5)+0.5)%16);
-                                $(s.windDirectionTarget).text(compassDirections[directionIndex]);
+                                var compass = convertDegreesToCompass(windDirection);
+                                $(s.windDirectionTarget).text(compass);
                             }
                         }
                     }
                     else{
                         $(s.windDirectionTarget).text(windDirection.toFixed(1) + '°');
+                    }
+
+                    // Convert wind direction (degrees/compass) if enabled.
+                    if(s.clickConvertWindDirection == true){
+                        var convertWindDirectionClickCount = 0;
+                        var windDirectionUnits = ['degrees', 'compass'];
+
+                        $(s.windDirectionTarget).on('click', function(){
+                            convertWindDirectionClickCount++;
+                            var newWindDirectionUnit = windDirectionUnits[convertWindDirectionClickCount % windDirectionUnits.length];
+
+                            // If default unit is 'degrees', convert measurement to 'compass'.
+                            if(newWindDirectionUnit === 'degrees'){
+                                var compass = convertDegreesToCompass(windDirection);
+                                $(s.windDirectionTarget).text(compass);
+                            }
+                            else if(newWindDirectionUnit ==='compass'){
+                                $(s.windDirectionTarget).text(windDirection.toFixed(1) + '°');
+                            }
+                        });
                     }
                 }
 
@@ -406,7 +421,30 @@
                 return windSpeed.toFixed(1)  + ' ' + unitTo;
             }
         }
-    }
 
+        /**
+         * A function to convert direction in degrees to general compass direction.
+         * @param {Number} deg The value to be converted, in degrees.
+         * @return {String} The converted compass direction.
+         */
+        function convertDegreesToCompass(deg){
+
+            // The 16 general compass directions
+            var compassDirections = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+
+            // There are 16 general compass directions.
+            // Dividing 360 by 16 equals 22.5.
+            // 0.5 is added to prevent ties.
+            var directionIndex = null;
+            if($.isNumeric(deg))
+            {
+                if(deg >=0){
+                    directionIndex=+Math.round(((deg/22.5)+0.5)%16);
+                    return compassDirections[directionIndex];
+                }
+            }
+            return null;
+        }
+    }
 
 })(jQuery);
