@@ -6,6 +6,7 @@
  Date Created: August 28, 2013
  Licensed under the MIT license
  */
+
 ;(function($) {
 
     $.fn.openWeather  = function(options) {
