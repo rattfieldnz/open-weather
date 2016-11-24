@@ -63,6 +63,10 @@
         // define settings namespace
         var s = plugin.settings;
 
+
+        // Defining temperature target elements as a group.
+        var temperatureTargetElements = ['.' + el.attr('class'), s.minTemperatureTarget, s.maxTemperatureTarget];
+
         // define basic api endpoint
         apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.units;
 
@@ -156,19 +160,30 @@
                     maxTemperature = parseFloat(maxTemperature.substring(0, maxTemperature.length - 2));
                     minTemperature = parseFloat(minTemperature.substring(0, minTemperature.length - 2));
 
-                    $(el).on('click', function(){
-                        convertTemperatureClickCount++;
+                    //Iterate over all element targets displaying temperature, enabling all of their temperature
+                    //values to change when either one is clicked.
+                    for(var i = 0; i < temperatureTargetElements.length; i++){
+                        $(temperatureTargetElements[i]).on('click', function(){
+                            var newTemperatureUnit = temperatureMeasurements[convertTemperatureClickCount % temperatureMeasurements.length];
+                            var newTemperature = convertTemperature(s.units, newTemperatureUnit, currentTemperature);
 
-                        var newTemperatureUnit = temperatureMeasurements[convertTemperatureClickCount % temperatureMeasurements.length];
-                        var newTemperature = convertTemperature(s.units, newTemperatureUnit, currentTemperature);
+                            var newMaxTemperature = convertTemperature(s.units, newTemperatureUnit, maxTemperature);
+                            var newMinTemperature = convertTemperature(s.units, newTemperatureUnit, minTemperature);
 
-                        var newMaxTemperature = convertTemperature(s.units, newTemperatureUnit, maxTemperature);
-                        var newMinTemperature = convertTemperature(s.units, newTemperatureUnit, minTemperature);
+                            if(el != null){
+                                $(el).text(newTemperature);
+                            }
 
-                        $(el).text(newTemperature);
-                        $(s.minTemperatureTarget).text(newMinTemperature);
-                        $(s.maxTemperatureTarget).text(newMaxTemperature);
-                    });
+                            if(s.minTemperatureTarget != null){
+                                $(s.minTemperatureTarget).text(newMinTemperature);
+                            }
+                            if(s.maxTemperatureTarget != null){
+                                $(s.maxTemperatureTarget).text(newMaxTemperature);
+                            }
+                            convertTemperatureClickCount++;
+
+                        });
+                    }
                 }
 
                 // if minTemperatureTarget isn't null
