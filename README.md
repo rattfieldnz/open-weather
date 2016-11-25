@@ -44,6 +44,24 @@ If you have installed JQuery with Bower, including the script could look like so
 <script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
+
+###Install with Node Package Manager (NPM)
+
+If you prefer to install your packages/plugins using NPM, you can do so with the following command:
+
+```
+npm install open-weather-updated
+```
+
+By default, this will install the plugin in your 'node_modules' directory, unless specified differently.
+
+You can include the plugin like so:
+
+```html
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/open-weather-updated/build/openWeather.min.js"></script>
+```
+
 ###Install Manually
 
 Download and extract this repository to the root of your web application. 

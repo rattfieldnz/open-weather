@@ -18,7 +18,7 @@
 		"jquery-plugin",
 		"ecosystem:jquery"
 	],
-	"version": "1.2.13",
+	"version": "1.2.14",
 	"author": {
 		"name": "Robert Attfield, Michael Lynch, and other contributors.",
 		"url": "https://github.com/rattfieldnz/open-weather/AUTHORS.md"
