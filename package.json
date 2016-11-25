@@ -1,0 +1,37 @@
+{
+  "name": "open-weather-updated",
+  "title": "Open Weather Updated",
+  "version": "1.2.11",
+  "author": {
+    "name": "Robert Attfield, Michael Lynch, and other contributors.",
+    "url": "https://github.com/rattfieldnz/open-weather/AUTHORS.md"
+  },
+  "license": "MIT",
+  "description": "A simple, lightweight jQuery plugin used to display the current weather of any city using the free OpenWeatherMap API. Forked from Michael Lynch @ https://github.com/michael-lynch/open-weather.",
+  "main": "build/openWeather.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rattfieldnz/open-weather.git"
+  },
+  "keywords": [
+    "open",
+    "weather",
+    "temperature",
+    "wind",
+    "speed",
+    "humidity",
+    "sunset",
+    "sunrise",
+    "city",
+    "coordinates",
+    "jquery-plugin",
+    "ecosystem:jquery"
+  ],
+  "bugs": {
+    "url": "https://github.com/rattfieldnz/open-weather/issues"
+  },
+  "homepage": "https://github.com/rattfieldnz/open-weather#readme"
+}
