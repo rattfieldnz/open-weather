@@ -140,106 +140,91 @@ $('.weather-temperature').openWeather({
 
 ####Options
 
-<p><em>key: integer</em>
-<br />A string that defines the OpenWeatherMap API key for your application (default: null).
-</p>
+#####<em>key: integer</em>
+<p>A string that defines the OpenWeatherMap API key for your application (default: null).</p>
 
-<p><em>lang: string</em>
-<br />A string that defines the language (default: 'en').
+#####<em>lang: string</em>
+<p>A string that defines the language (default: 'en').
 <br />(English - en, Russian - ru, Italian - it, Spanish - sp, Ukrainian - ua, German - de, Portuguese - pt, Romanian - ro, Polish - pl, Finnish - fi, Dutch - nl, French - fr, Bulgarian - bg, Swedish - se, Chinese Traditional - zh_tw, Chinese Simplified - zh_cn, Turkish - tr)
 </p>
 
-<p><em>city: "city name, country / province/ state"</em>
-<br />A string that defines the city (default: null).
-</p>
+#####<em>city: "city name, country / province/ state"</em>
+<p>A string that defines the city (default: null).</p>
 
-<p><em>lat: integer</em>
-<br />An integer that defines the latitude (default: null). 
-</p>
+#####<em>lat: integer</em>
+<p>An integer that defines the latitude (default: null).</p>
 
-<p><em>lng: integer</em>
-<br />An integer that defines the longitude (default: null).
-</p>
+#####<em>lng: integer</em>
+<p>An integer that defines the longitude (default: null).</p>
 
-<p><em>placeTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the location name (default: null).
-</p>
+#####<em>placeTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the location name (default: null).</p>
 
-<p><em>units: "metric / imperial / standard"</em>
-<br />A string that defines the type of units (default: 'metric'). These measurement units are also the pre-defined API defaults.
-</p>
+#####<em>units: "metric / imperial / standard"</em>
+<p>A string that defines the type of units (default: 'metric'). These measurement units are also the pre-defined API defaults.</p>
 
-<p><em>descriptionTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the weather description (default: null).
-</p>
+#####<em>descriptionTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the weather description (default: null).</p>
 
-<p><em>minTemperatureTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the minimum temperature (default: null).
-</p>
+#####<em>minTemperatureTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the minimum temperature (default: null).</p>
 
-<p><em>maxTemperatureTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the maximum temperature (default: null).
-</p>
+#####<em>maxTemperatureTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the maximum temperature (default: null).</p>
 
-<p><em>windSpeedTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the wind speed (default: null).
-</p>
+#####<em>windSpeedTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the wind speed (default: null).</p>
 
-<p><em>windSpeedUnit: "Kph / Mph / mps"</em>
-<br />A string that defines the unit to measure wind speed (default: Kph).
-</p>
+#####<em>windSpeedUnit: "Kph / Mph / mps"</em>
+<p>A string that defines the unit to measure wind speed (default: Kph).</p>
 
-<p><em>windDirectionUnit: "degrees / compass"</em>
-<br />A string that defines the unit to measure wind direction (default: compass).
+#####<em>windDirectionUnit: "degrees / compass"</em>
+<p>A string that defines the unit to measure wind direction (default: compass).
 <br />The compass directions will display one of these below:
 <br />
 <br />N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW.
 </p>
 
-<p><em>clickConvertWindDirection: "true / false"</em>
-<br />A boolean which enables wind direction to be converted when clicked.
+#####<em>clickConvertWindDirection: "true / false"</em>
+<p>A boolean which enables wind direction to be converted when clicked.
 <br />Available units are 'degrees' and 'compass'.
 </p>
 
-<p><em>clickConvertTemperature: "true / false"</em>
-<br />A boolean which enables wind direction to be converted when clicked.
+#####<em>clickConvertTemperature: "true / false"</em>
+<p>A boolean which enables wind direction to be converted when clicked.
 <br />Available units are Celsius (metric), Fahrenheit (imperial), Kelvin (standard).
 </p>
 
-<p><em>clickConvertWindSpeed: "true / false"</em>
-<br />A boolean which enables wind speed measurement to be converted when clicked.
+#####<em>clickConvertWindSpeed: "true / false"</em>
+<p>A boolean which enables wind speed measurement to be converted when clicked.
 <br />Available units are 'Mph', 'Kph', and 'mps' (meters per second).
 </p>
 
-<p><em>humidityTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the humidity (default: null).
-</p>
+#####<em>humidityTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the humidity (default: null).</p>
 
-<p><em>sunriseTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the time of sunrise (default: null).
-</p>
+#####<em>sunriseTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the time of sunrise (default: null).</p>
 
-<p><em>sunsetTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the time of sunset (default: null).
-</p>
+#####<em>sunsetTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the time of sunset (default: null).</p>
 
-<p><em>iconTarget: "id / class / element"</em>
-<br />A string that defines the ID, class or element that will contain the icon image (default: null).
-</p>
+#####<em>iconTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the icon image (default: null).</p>
 
-<p><em>customIcons: "path"</em>
-<br />A string that defines the path to the custom icons (default: null).
-</p>
+#####<em>customIcons: "path"</em>
+<p>A string that defines the path to the custom icons (default: null).</p>
 
-<p><em>success: function() {}</em>
-<br />A function that runs after the plugin has successfully retrieved weather data. (default: function()).
-</p>
+#####<em>timeLastUpdatedTarget: "id /class / element"</em>
+<p>A string that defines the ID, class or element that will contain the time which the weather was last updated (default: null).</p>
 
-<p><em>error: function() {}</em>
-<br />A function that runs if there was an error retrieving weather data. (default: function(message)).
-</p>
+#####<em>success: function() {}</em>
+<p>A function that runs after the plugin has successfully retrieved weather data. (default: function()).</p>
 
-#####Example:
+#####<em>error: function() {}</em>
+<p>A function that runs if there was an error retrieving weather data. (default: function(message)).</p>
+
+####Example:
 
 ```js
 $(function() {
@@ -262,6 +247,7 @@ $(function() {
         humidityTarget: '.weather-humidity',
         iconTarget: '.weather-icon',
         customIcons: '/img/icons/weather/',
+        timeLastUpdatedTarget: '.weather-time-last-updated',
         success: function() {
             $('.weather-wrapper').show();
         },
