@@ -6,7 +6,7 @@ This plugin allows you to display the location, the current temperature, the cur
 
 <strong>An API key is not required but it is recommended. <a href="http://openweathermap.org/login">Register here</a> to obtain an OpenWeatherMap API key for your application.</strong>
 
-<a href="http://michael-lynch.github.io/open-weather/" target="_blank">See demo</a>
+<a href="https://robertattfield.com/whatstheweather/" target="_blank">See demo</a>.
 
 <strong>The current version of this plugin is 1.3.0.</strong>
 
