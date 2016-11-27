@@ -2,11 +2,12 @@
  Name: Open Weather
  Dependencies: jQuery, OpenWeatherMap API
  Author: Michael Lynch
+ Contributor: Robert Attfield
  Author URL: http://michaelynch.com
+ Contributor URL: https://www.robertattfield.com
  Date Created: August 28, 2013
  Licensed under the MIT license
  */
-
 ;(function($) {
 
     $.fn.openWeather  = function(options) {
@@ -69,7 +70,7 @@
         var temperatureTargetElements = ['.' + el.attr('class'), s.minTemperatureTarget, s.maxTemperatureTarget];
 
         // define basic api endpoint
-        apiURL = '//api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.units;
+        apiURL = 'http://api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.units;
 
         // if city isn't null
         if(s.city != null) {
