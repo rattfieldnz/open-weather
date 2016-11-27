@@ -42,39 +42,91 @@
 	
 	</div>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.3/URI.min.js"></script>
+	<script src="https://raw.githubusercontent.com/afeld/jsonp/v0.3.1/jsonp.js"></script>
 	<script src="../build/openWeather.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.1.0/geolocator.js"></script>
 	<script>
-		$(function() {
-			$('.weather-temperature').openWeather({
-				key: '27bb2c32da00b682f1fe4b3e2764cfe5',
-                units: 'metric',
-                lang: 'en',
-                city: 'Dunedin,NZ',
-                placeTarget: '.weather-place',
-                descriptionTarget: '.weather-description',
-                minTemperatureTarget: '.weather-min-temperature',
-                maxTemperatureTarget: '.weather-max-temperature',
-                windSpeedTarget: '.weather-wind-speed',
-                windSpeedUnit: 'Kph',
-                windDirectionUnit: 'compass',
-                clickConvertTemperature: true,
-                clickConvertWindDirection: true,
-                clickConvertWindSpeed: true,
-                windDirectionTarget: '.weather-wind-direction',
-                humidityTarget: '.weather-humidity',
-                iconTarget: '.weather-icon',
-                customIcons: '/img/icons/weather/',
-                timeLastUpdatedTarget: '.weather-time-last-updated',
-                success: function() {
-                    $('.weather-wrapper').show();
-                },
-                error: function(message) {
-                    console.log(message);
-                }
-			});
-		});
+        $(function(){
 
+            //Set-up options to retrieve coordinates from onery/geolocator plugin.
+            //link to plugin script MUST be include BEFORE this script file.
+            geolocator.config({
+                language: "en",
+                google: {
+                    version: "3",
+                    key: "YOUR-GOOGLE-API-KEY"
+                }
+            });
+
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 2000,
+                maximumWait: 2000,     // max wait time for desired accuracy
+                maximumAge: 0,          // disable cache
+                desiredAccuracy: 30,    // meters
+                fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+                addressLookup: false,    // requires Google API key if true
+                timezone: false,         // requires Google API key if true
+                map: null,      // interactive map element id (or options object)
+                staticMap: false        // map image URL (boolean or options object)
+            };
+
+            //Use onury/geolocator plugin to obtain current user's coordinates.
+            geolocator.locate(options, function (err, location) {
+                if (err) return console.log(err);
+
+                //Set lat/long coordinates from geolocator-returned data.
+                var coords = {
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude
+                };
+
+                //Obtain the city,region,country using onury/geolocator
+                //reverse-geocode functionality.
+                geolocator.reverseGeocode(coords, function (err, location) {
+
+                    //Declare, initialise, set variable for city,region,country.
+                    var cityRegionCountry = location.address.city + "," + location.address.region + "," + location.address.countryCode;
+
+                    //Finally, use OpenWeather plugin to obtain weather data.
+                    $('.weather-temperature').openWeather({
+                        key: 'YOUR-OPENWEATHERMAP-API-KEY',
+                        units: 'metric',
+                        lang: 'en',
+                        city: cityRegionCountry,
+                        placeTarget: '.weather-place',
+                        descriptionTarget: '.weather-description',
+                        minTemperatureTarget: '.weather-min-temperature',
+                        maxTemperatureTarget: '.weather-max-temperature',
+                        windSpeedTarget: '.weather-wind-speed',
+                        windSpeedUnit: 'Kph',
+                        windDirectionUnit: 'compass',
+                        clickConvertWindSpeed: true,
+                        clickConvertTemperature: true,
+                        clickConvertWindDirection: true,
+                        windDirectionTarget: '.weather-wind-direction',
+                        humidityTarget: '.weather-humidity',
+                        sunriseTarget: '.weather-sunrise',
+                        sunsetTarget: '.weather-sunset',
+                        iconTarget: '.weather-icon',
+                        customIcons: '/img/icons/weather/',
+                        lat: coords.latitude != null ? coords.latitude : null,
+                        lng: coords.longitude != null ? coords.longitude : null,
+                        timeLastUpdatedTarget: '.weather-time-last-updated',
+                        success: function() {
+
+                            $('.weather-wrapper').show();
+                        },
+                        error: function(message) {
+                            console.log(message);
+                        }
+                    });
+                });
+            });
+
+        });
 	</script>
 
 </body>
