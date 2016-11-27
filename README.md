@@ -4,13 +4,36 @@ A simple, lightweight jQuery plugin used to display the current weather of any c
 
 This plugin allows you to display the location, the current temperature, the current low temperature, the current high temperature, a description of the current weather, a weather icon, the humidity level, the wind speed, the time the sun will rise, and the time the sun will set.
 
-<strong>An API key is not required but it is reccomended. <a href="http://openweathermap.org/login">Register here</a> to obtain an OpenWeatherMap API key for your application.</strong>
+<strong>An API key is not required but it is recommended. <a href="http://openweathermap.org/login">Register here</a> to obtain an OpenWeatherMap API key for your application.</strong>
 
 <a href="http://michael-lynch.github.io/open-weather/" target="_blank">See demo</a>
 
-##Instructions
+<strong>The current version of this plugin is 1.3.0.</strong>
 
-###Install via Bower
+#Instructions
+
+##Installation of Required Dependencies
+Before installing, make sure you have also installed the following required dependencies: JQuery, jsonproxy, and URIjs. You can do so via Bower, NPM, or plain old download. 
+
+<strong>Note:</strong> jsonproxy and URIjs only required from version 1.3.0 and up.
+
+###Using Bower
+```
+bower install jquery --save
+bower install jsonproxy --save //this should also install URIjs. If not...
+bower install URIjs --save
+```
+
+###Using Node Package Manager (NPM)
+```
+npm install jquery --save
+npm install jsonproxy --save //this should also install URIjs. If not...
+npm install URIjs --save
+```
+
+##Installation of Plugin
+
+###Using Bower
 
 You can install this package by executing the following in your shell:
 
@@ -20,32 +43,19 @@ bower install open-weather-updated
 
 The above will install the latest package version. 
 
-Please view the available tags to see relevant versions. To see the tags, click on the 'Branch: master' dropdown, then click on the 'Tags' tab - the latest version will be the first tag at the top.
-
-Note: the original project from Michael Lynch can be installed using the following command:
-
-```
-bower install open-weather
-```
-
 The package will install in 'bower_components' directory, unless specified by your .bowerrc file.
 
-If installing the script via Bower, include the script, along with JQuery like so:
-
-```html
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
-```
-
-If you have installed JQuery with Bower, including the script could look like so:
+If installing the script via Bower, include the script, along with JQuery, URIjs, and jsonproxy like so:
 
 ```html
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/URIjs/src/URI.min.js"></script>
+<script src="bower_components/jsonproxy/jsonp.js"></script>
 <script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
 
-###Install with Node Package Manager (NPM)
+###Using Node Package Manager (NPM)
 
 If you prefer to install your packages/plugins using NPM, you can do so with the following command:
 
@@ -59,6 +69,8 @@ You can include the plugin like so:
 
 ```html
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/URIjs/src/URI.min.js"></script>
+<script src="node_modules/jsonproxy/jsonp.js"></script>
 <script src="node_modules/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
@@ -68,11 +80,13 @@ Download and extract this repository to the root of your web application.
 
 For example, if I was to take this approach,I would download this repository to a 'js/libraries' folder.
 
-Include jQuery and the plugin in the head or footer of your page.
+Include jQuery, URIjs, jsonproxy, and the plugin in the head or footer of your page.
 
 ```html
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="/js/libraries/open-weather-updated/build/openWeather.min.js"></script>
+<script src="js/libraries/jquery/dist/jquery.min.js"></script>
+<script src="js/libraries/URIjs/src/URI.min.js"></script>
+<script src="js/libraries/jsonproxy/jsonp.js"></script>
+<script src="js/libraries/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
 ###Basic Use

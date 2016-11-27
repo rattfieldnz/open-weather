@@ -107,7 +107,7 @@
             return hours + ':' + minutes + ' ' + ampm;
         };
 
-        $.ajax({
+        $.jsonp({
             type: 'GET',
             url: apiURL,
             dataType: 'jsonp',
@@ -498,7 +498,7 @@
             {
                 if(deg >=0){
                     directionIndex=+Math.round(((deg/22.5)+0.5)%16);
-                    return compassDirections[directionIndex];
+                    return compassDirections[directionIndex - 1];
                 }
             }
             return null;
