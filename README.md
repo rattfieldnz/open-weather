@@ -8,7 +8,7 @@ This plugin allows you to display the location, the current temperature, the cur
 
 <a href="https://robertattfield.com/whatstheweather/" target="_blank">See demo</a>. The demo is a work in progress, so please mind the 'minimalistic' design/layout at this stage, and visit it often to check on improvements :).
 
-<strong>The current version of this plugin is 1.3.1.</strong>
+<strong>The current version of this plugin is 1.4.0.</strong>
 
 #Instructions
 
@@ -122,17 +122,17 @@ The OpenWeatherMap API returns their own set of icons, however, if you don't wan
 
 <ol>
 
-	<p>clear.png</p>
-	
-	<p>clouds.png</p>
-	
-	<p>rain.png</p>
-	
-	<p>snow.png</p>
-	
-	<p>storm.png</p>
-	
-	<p>mist.png</p>
+<li>clear.png</li>
+
+<li>clouds.png</li>
+
+<li>rain.png</li>
+
+<li>snow.png</li>
+
+<li>storm.png</li>
+
+<li>mist.png</li>
 
 </ol>
 
@@ -143,14 +143,54 @@ To use custom icons create a directory where the icons will live and inside of t
 	
 Place your custom icons inside the "day" and "night" directories and initialize the plugin using the customIcons option.
 
+##Custom Background Images
+
+If you enable this feature, your web page's background image will be set to one appropriate to the current weather condition.
+
+For example, if it was a rainy day, the image 'images/weather/backgrounds/day/rain.png' will be set as the main page background.
+
+For this to work, you will need to define a directory structure in the root of your website's file-system for 'day' and 'night' background images. An example is: 'images/weather/backgrounds/day', 'images/weather/backgrounds/night'.
+
+The 'customBackgroundImages' attribute in the example (at the bottom of the README.md) must be set like so:
+
 ```js
 $('.weather-temperature').openWeather({
 	city: 'Dunedin,NZ',
-	customIcons: '/img/icons/weather/'
+	customBackgroundImages: 'path/to/weather/background/images/folder/'
+
 });
 ```
+
+For example, if I stored the day/night backgrounds in the 'images/weather/backgrounds' folder, this will be set to:
+
+```js
+$('.weather-temperature').openWeather({
+	city: 'Dunedin,NZ',
+	customBackgroundImages: 'images/weather/backgrounds/'
+
+});
+```
+
+In each 'day' and night' folders described above, custom background images must be named as follows:
+                                                  
+<ol>
+
+<li>clear.png</li>
+
+<li>clouds.png</li>
+
+<li>rain.png</li>
+
+<li>snow.png</li>
+
+<li>storm.png</li>
+
+<li>mist.png</li>
+
+</ol>
+
 	
-<em>* Note that if you are using custom icons you must include all 12 images.</em>
+<em>* Note that if you are using custom background images, you must include all 12 images.</em>
 
 ####Options
 
@@ -261,6 +301,7 @@ $(function() {
         humidityTarget: '.weather-humidity',
         iconTarget: '.weather-icon',
         customIcons: '/img/icons/weather/',
+	    customBackgroundImages: 'images/weather/backgrounds/',
         timeLastUpdatedTarget: '.weather-time-last-updated',
         success: function() {
             $('.weather-wrapper').show();

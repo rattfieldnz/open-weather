@@ -31,6 +31,7 @@
             placeTarget: null,
             iconTarget: null,
             customIcons: null,
+            customBackgroundImages: null,
             units: 'metric',
             windSpeedUnit: 'Kph',
             windDirectionUnit: 'compass',
@@ -205,44 +206,8 @@
                             timeOfDay = 'night';
                         }
 
-                        // if icon is clear sky
-                        if(defaultIconFileName == '01d' || defaultIconFileName == '01n') {
-
-                            iconName = 'clear';
-                        }
-
-                        // if icon is clouds
-                        if(defaultIconFileName == '02d' || defaultIconFileName == '02n' || defaultIconFileName == '03d' || defaultIconFileName == '03n' || defaultIconFileName == '04d' || defaultIconFileName == '04n') {
-
-                            iconName = 'clouds';
-                        }
-
-                        // if icon is rain
-                        if(defaultIconFileName == '09d' || defaultIconFileName == '09n' || defaultIconFileName == '10d' || defaultIconFileName == '10n') {
-
-                            iconName = 'rain';
-                        }
-
-                        // if icon is thunderstorm
-                        if(defaultIconFileName == '11d' || defaultIconFileName == '11n') {
-
-                            iconName = 'storm';
-                        }
-
-                        // if icon is snow
-                        if(defaultIconFileName == '13d' || defaultIconFileName == '13n') {
-
-                            iconName = 'snow';
-                        }
-
-                        // if icon is mist
-                        if(defaultIconFileName == '50d' || defaultIconFileName == '50n') {
-
-                            iconName = 'mist';
-                        }
-
                         // define custom icon URL
-                        var iconURL = s.customIcons+timeOfDay+'/'+iconName+'.png';
+                        var iconURL = s.customIcons+timeOfDay+'/'+weatherIconName(defaultIconFileName)+'.png';
 
                     } else {
 
@@ -252,6 +217,41 @@
 
                     // set iconTarget src attribute as iconURL
                     $(s.iconTarget).attr('src', iconURL);
+                }
+
+                if(s.customBackgroundImages != null && data.weather[0].main != null){
+
+                    // define the default icon name
+                    var defaultBackgroundFileName = data.weather[0].icon;
+
+                    var backgroundImageName;
+
+                    // if default icon name contains the letter 'd'
+                    if(defaultBackgroundFileName.indexOf('d') != -1) {
+
+                        // define time of day as day
+                        timeOfDay = 'day';
+
+                    } else {
+
+                        // define time of day as night
+                        timeOfDay = 'night';
+                    }
+
+                    backgroundImageName = s.customBackgroundImages + timeOfDay + '/' + weatherIconName(defaultBackgroundFileName) + '.jpg';
+
+                    $('html').css('height', '100%');
+                    $('body').css({
+                        'height': '100%',
+                        'background-image': 'url(' + backgroundImageName + ')',
+                        'background-repeat': 'no-repeat',
+                        '-webkit-background-size': 'cover',
+                        '-moz-background-size': 'cover',
+                        '-o-background-size': 'cover',
+                        'background-size': 'cover',
+                        'background-position': 'center'
+                    });
+
                 }
 
                 // if placeTarget isn't null
@@ -529,6 +529,48 @@
                 }
                 return unit;
             }
+        }
+
+        function weatherIconName(defaultIconFileName){
+
+            var iconName;
+            // if icon is clear sky
+            if(defaultIconFileName == '01d' || defaultIconFileName == '01n') {
+
+                iconName = 'clear';
+            }
+
+            // if icon is clouds
+            if(defaultIconFileName == '02d' || defaultIconFileName == '02n' || defaultIconFileName == '03d' || defaultIconFileName == '03n' || defaultIconFileName == '04d' || defaultIconFileName == '04n') {
+
+                iconName = 'clouds';
+            }
+
+            // if icon is rain
+            if(defaultIconFileName == '09d' || defaultIconFileName == '09n' || defaultIconFileName == '10d' || defaultIconFileName == '10n') {
+
+                iconName = 'rain';
+            }
+
+            // if icon is thunderstorm
+            if(defaultIconFileName == '11d' || defaultIconFileName == '11n') {
+
+                iconName = 'storm';
+            }
+
+            // if icon is snow
+            if(defaultIconFileName == '13d' || defaultIconFileName == '13n') {
+
+                iconName = 'snow';
+            }
+
+            // if icon is mist
+            if(defaultIconFileName == '50d' || defaultIconFileName == '50n') {
+
+                iconName = 'mist';
+            }
+
+            return iconName;
         }
     }
 
