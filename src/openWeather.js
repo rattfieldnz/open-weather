@@ -93,8 +93,6 @@
 
         }
 
-        console.log(parameters);
-
         // format time function
         var formatAMPM = function(unixTimestamp) {
             // define milliseconds using unix time stamp
@@ -121,6 +119,7 @@
                 xmlToJSON: false
             },
             success: function(data) {
+
                 var temperature;
                 var minTemperature;
                 var maxTemperature;
@@ -131,10 +130,12 @@
                     var sunriseDate = new Date(data.sys.sunrise*1000);
                     var sunsetDate = new Date(data.sys.sunset*1000);
 
-                    if(currentDate >= sunriseDate){
+                    // If date data last updated between sunrise and sunset,
+                    // return day, else return night.
+                    if(currentDate > sunriseDate && currentDate < sunsetDate){
                         return 'day';
                     }
-                    if(currentDate >= sunsetDate){
+                    else{
                         return 'night';
                     }
                 };
