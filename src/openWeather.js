@@ -66,32 +66,34 @@
         // define settings namespace
         var s = plugin.settings;
 
-
         // Defining temperature target elements as a group.
         var temperatureTargetElements = ['.' + el.attr('class'), s.minTemperatureTarget, s.maxTemperatureTarget];
 
-        // define basic api endpoint
-        apiURL = 'http://api.openweathermap.org/data/2.5/weather?lang='+s.lang+'&units='+s.units;
+        //Creating parameters object tobe passed to AJAX below.
+        var parameters = {};
+
+        // if units isn't null
+        if(s.units != null){
+            parameters.units = s.units;
+        }
 
         // if city isn't null
         if(s.city != null) {
-
-            // define API url using city (and remove any spaces in city)
-            apiURL += '&q='+s.city.replace(' ', '');
+            parameters.q = s.city.replace(' ', '');
 
         } else if(s.lat != null && s.lng != null) {
-
-            // define API url using lat and lng
-            apiURL += '&lat='+s.lat+'&lon='+s.lng;
+            paramaters.lat = s.lat;
+            paramaters.lng = s.lng;
         }
 
         // if api key was supplied
         if(s.key != null) {
 
-            // append api key paramater
-            apiURL += '&appid=' + s.key;
+            parameters.appid = s.key;
 
         }
+
+        console.log(parameters);
 
         // format time function
         var formatAMPM = function(unixTimestamp) {
@@ -109,15 +111,33 @@
             return hours + ':' + minutes + ' ' + ampm;
         };
 
-        $.jsonp({
-            type: 'GET',
-            url: apiURL,
-            dataType: 'jsonp',
+        $.ajax({
+            url: 'https://proxy.hackeryou.com',
+            dataType: 'json',
+            method:'GET',
+            data: {
+                reqUrl: 'http://api.openweathermap.org/data/2.5/weather',
+                params: parameters,
+                xmlToJSON: false
+            },
             success: function(data) {
-                console.log(apiURL);
                 var temperature;
                 var minTemperature;
                 var maxTemperature;
+
+                var dayOrNight = function(){
+
+                    var currentDate = new Date(data.dt*1000);
+                    var sunriseDate = new Date(data.sys.sunrise*1000);
+                    var sunsetDate = new Date(data.sys.sunset*1000);
+
+                    if(currentDate >= sunriseDate){
+                        return 'day';
+                    }
+                    if(currentDate >= sunsetDate){
+                        return 'night';
+                    }
+                };
 
                 temperature = Math.round(data.main.temp) + temperatureUnit(s.units);
                 minTemperature = Math.round(data.main.temp_min) + temperatureUnit(s.units);
@@ -190,21 +210,7 @@
                         // define the default icon name
                         var defaultIconFileName = data.weather[0].icon;
 
-                        var iconName;
-
-                        var timeOfDay;
-
-                        // if default icon name contains the letter 'd'
-                        if(defaultIconFileName.indexOf('d') != -1) {
-
-                            // define time of day as day
-                            timeOfDay = 'day';
-
-                        } else {
-
-                            // define time of day as night
-                            timeOfDay = 'night';
-                        }
+                        var timeOfDay = dayOrNight();
 
                         // define custom icon URL
                         var iconURL = s.customIcons+timeOfDay+'/'+weatherIconName(defaultIconFileName)+'.png';
@@ -226,17 +232,7 @@
 
                     var backgroundImageName;
 
-                    // if default icon name contains the letter 'd'
-                    if(defaultBackgroundFileName.indexOf('d') != -1) {
-
-                        // define time of day as day
-                        timeOfDay = 'day';
-
-                    } else {
-
-                        // define time of day as night
-                        timeOfDay = 'night';
-                    }
+                    timeOfDay = dayOrNight();
 
                     backgroundImageName = s.customBackgroundImages + timeOfDay + '/' + weatherIconName(defaultBackgroundFileName) + '.jpg';
 

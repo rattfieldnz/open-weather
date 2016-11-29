@@ -8,27 +8,23 @@ This plugin allows you to display the location, the current temperature, the cur
 
 <a href="https://robertattfield.com/whatstheweather/" target="_blank">See demo</a>. The demo is a work in progress, so please mind the 'minimalistic' design/layout at this stage, and visit it often to check on improvements :).
 
-<strong>The current version of this plugin is 1.4.0.</strong>
+<strong>The current version of this plugin is 1.5.0.</strong>
 
 #Instructions
 
 ##Installation of Required Dependencies
-Before installing, make sure you have also installed the following required dependencies: JQuery, jsonproxy, and URIjs. You can do so via Bower, NPM, or plain old download. 
+Before installing, make sure you have also installed the following required dependencies: JQuery, ~~jsonproxy, and URIjs~~. You can do so via Bower, NPM, or plain old download. 
 
-<strong>Note:</strong> jsonproxy and URIjs only required from version 1.3.0 and up.
+<strong>For version 1.5.0+, jsonproxy was removed as it was constantly down. This was used to handle Cross Origin Resource Sharing (CORS) requests especially for HTTPS sites. Another more stable solution will be built in at a later date. For the time being, https://proxy.hackeryou.com is the proxy being used in this plugin. If you would like to know more about CORS, visit https://www.w3.org/TR/cors/.</strong>
 
 ###Using Bower
 ```
 bower install jquery --save
-bower install jsonproxy --save //this should also install URIjs. If not...
-bower install URIjs --save
 ```
 
 ###Using Node Package Manager (NPM)
 ```
 npm install jquery --save
-npm install jsonproxy --save //this should also install URIjs. If not...
-npm install URIjs --save
 ```
 
 ##Installation of Plugin
