@@ -8,7 +8,7 @@ This plugin allows you to display the location, the current temperature, the cur
 
 <a href="https://robertattfield.com/whatstheweather/" target="_blank">See demo</a>. The demo is a work in progress, so please mind the 'minimalistic' design/layout at this stage, and visit it often to check on improvements :).
 
-<strong>The current version of this plugin is 1.5.1.</strong>
+<strong>The current version of this plugin is 1.5.2.</strong>
 
 #Instructions
 
@@ -213,8 +213,11 @@ In each 'day' and night' folders described above, custom background images must 
 #####<em>units: "metric / imperial / standard"</em>
 <p>A string that defines the type of units (default: 'metric'). These measurement units are also the pre-defined API defaults.</p>
 
+#####<em>shortDescriptionTarget: "id / class / element"</em>
+<p>A string that defines the ID, class or element that will contain the short weather description (default: null).</p>
+
 #####<em>descriptionTarget: "id / class / element"</em>
-<p>A string that defines the ID, class or element that will contain the weather description (default: null).</p>
+<p>A string that defines the ID, class or element that will contain the long weather description (default: null).</p>
 
 #####<em>minTemperatureTarget: "id / class / element"</em>
 <p>A string that defines the ID, class or element that will contain the minimum temperature (default: null).</p>
@@ -277,34 +280,43 @@ In each 'day' and night' folders described above, custom background images must 
 ####Example:
 
 ```js
-$(function() {
-    $('.weather-temperature').openWeather({
-        key: '27bb2c32da00b682f1fe4b3e2764cfe5',
-        units: 'metric',
-        lang: 'en',
-        city: 'Dunedin,NZ',
-        placeTarget: '.weather-place',
-        descriptionTarget: '.weather-description',
-        minTemperatureTarget: '.weather-min-temperature',
-        maxTemperatureTarget: '.weather-max-temperature',
-        windSpeedTarget: '.weather-wind-speed',
-        windSpeedUnit: 'Kph',
-        windDirectionUnit: 'compass',
-        clickConvertTemperature: true,
-        clickConvertWindDirection: true,
-        clickConvertWindSpeed: true,
-        windDirectionTarget: '.weather-wind-direction',
-        humidityTarget: '.weather-humidity',
-        iconTarget: '.weather-icon',
-        customIcons: '/img/icons/weather/',
-	    customBackgroundImages: 'images/weather/backgrounds/',
-        timeLastUpdatedTarget: '.weather-time-last-updated',
-        success: function() {
-            $('.weather-wrapper').show();
-        },
-        error: function(message) {
-            console.log(message);
-        }
-    });
+$('.weather-temperature').openWeather({
+    key: 'YOUR-OPENWEATHERMAP-API-KEY',
+    units: 'metric',
+    lang: 'en',
+    city: 'Dunedin,Otago,NZ',
+    placeTarget: '.weather-place',
+    shortDescriptionTarget: '.short-weather-description',
+    descriptionTarget: '.weather-description',
+    minTemperatureTarget: '.weather-min-temperature',
+    maxTemperatureTarget: '.weather-max-temperature',
+    windSpeedTarget: '.weather-wind-speed',
+    windSpeedUnit: 'Kph',
+    windDirectionUnit: 'compass',
+    clickConvertWindSpeed: true,
+    clickConvertTemperature: true,
+    clickConvertWindDirection: true,
+    windDirectionTarget: '.weather-wind-direction',
+    humidityTarget: '.weather-humidity',
+    sunriseTarget: '.weather-sunrise',
+    sunsetTarget: '.weather-sunset',
+    iconTarget: '.weather-icon',
+    customIcons: '/img/icons/weather/',
+    customBackgroundImages: 'images/weather/backgrounds/',
+    lat: coords.latitude != null ? coords.latitude : null,
+    lng: coords.longitude != null ? coords.longitude : null,
+    timeLastUpdatedTarget: '.weather-time-last-updated',
+    success: function() {
+
+        $('.weather-wrapper').show();
+        $('.short-weather-description').hide();
+
+        var forecast = $('.weather-description').text();
+        $('.weather-description').text(forecast.charAt(0).toUpperCase() + forecast.slice(1).toLowerCase());
+
+    },
+    error: function(message) {
+        console.log(message);
+    }
 });
 ```

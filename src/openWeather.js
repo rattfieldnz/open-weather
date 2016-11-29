@@ -20,6 +20,7 @@
 
         // define default parameter
         var defaults = {
+            shortDescriptionTarget: null,
             descriptionTarget: null,
             maxTemperatureTarget: null,
             minTemperatureTarget: null,
@@ -199,8 +200,15 @@
                     $(s.maxTemperatureTarget).text(maxTemperature + temperatureUnit(s.units));
                 }
 
-                // set weather description
-                $(s.descriptionTarget).text(data.weather[0].description);
+                // set short weather description
+                if(s.shortDescriptionTarget != null) {
+                    $(s.shortDescriptionTarget).text(data.weather[0].main);
+                }
+
+                // set long weather description
+                if(s.descriptionTarget != null) {
+                    $(s.descriptionTarget).text(data.weather[0].description);
+                }
 
                 // if iconTarget and default weather icon aren't null
                 if(s.iconTarget != null && data.weather[0].icon != null) {
