@@ -133,12 +133,21 @@
 
                     // If date data last updated between sunrise and sunset,
                     // return day, else return night.
-                    if(currentDate > sunriseDate && currentDate < sunsetDate){
+                    if(timeToSeconds(currentDate) > timeToSeconds(sunriseDate)
+                        && timeToSeconds(currentDate) < timeToSeconds(sunsetDate)){
                         return 'day';
                     }
-                    else{
+                    else {
                         return 'night';
                     }
+                };
+
+                var timeToSeconds = function(date){
+
+                    return date.getSeconds() +
+                        (date.getMinutes() * 60) +
+                        (date.getHours() * 60 * 60);
+
                 };
 
                 temperature = Math.round(data.main.temp) + temperatureUnit(s.units);
