@@ -8,7 +8,7 @@ This plugin allows you to display the location, the current temperature, the cur
 
 <a href="https://robertattfield.com/whatstheweather/" target="_blank">See demo</a>. The demo is a work in progress, so please mind the 'minimalistic' design/layout at this stage, and visit it often to check on improvements :).
 
-<strong>The current version of this plugin is 1.5.3.</strong>
+<strong>The current version of this plugin is 1.5.4.</strong>
 
 #Instructions
 

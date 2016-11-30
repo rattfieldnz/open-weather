@@ -45,6 +45,7 @@
             key: null,
             lang: 'en',
             timeLastUpdatedTarget: null,
+            dayOrNightTarget: null,
             success: function() {},
             error: function(message) {}
         };
@@ -67,8 +68,16 @@
         // define settings namespace
         var s = plugin.settings;
 
+        var mainTargetElement;
+        if ($(el).is("#" + el.attr('id'))) {
+            mainTargetElement = "#" + el.attr('id');
+        }
+        else if($(el).is("." + el.attr('class'))){
+            mainTargetElement = "." + el.attr('class');
+        }
+
         // Defining temperature target elements as a group.
-        var temperatureTargetElements = ['.' + el.attr('class'), s.minTemperatureTarget, s.maxTemperatureTarget];
+        var temperatureTargetElements = [mainTargetElement, s.minTemperatureTarget, s.maxTemperatureTarget];
 
         //Creating parameters object tobe passed to AJAX below.
         var parameters = {};
@@ -258,12 +267,13 @@
                     $('body').css({
                         'height': '100%',
                         'background-image': 'url(' + backgroundImageName + ')',
+                        'background-attachment': 'fixed',
                         'background-repeat': 'no-repeat',
                         '-webkit-background-size': 'cover',
                         '-moz-background-size': 'cover',
                         '-o-background-size': 'cover',
                         'background-size': 'cover',
-                        'background-position': 'center'
+                        'background-position': 'center fixed'
                     });
 
                 }
@@ -390,6 +400,11 @@
                     var timeLastUpdated = formatAMPM(data.dt);
 
                     $(s.timeLastUpdatedTarget).text(timeLastUpdated);
+                }
+
+                if(s.dayOrNightTarget != null){
+                    $(s.dayOrNightTarget).text(dayOrNight());
+                    console.log(dayOrNight());
                 }
 
                 // run success callback
