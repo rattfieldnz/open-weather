@@ -41,12 +41,10 @@ The above will install the latest package version.
 
 The package will install in 'bower_components' directory, unless specified by your .bowerrc file.
 
-If installing the script via Bower, include the script, along with JQuery, URIjs, and jsonproxy like so:
+If installing the script via Bower, include the script, along with JQuery, ~~URIjs, and jsonproxy~~ like so:
 
 ```html
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/URIjs/src/URI.min.js"></script>
-<script src="bower_components/jsonproxy/jsonp.js"></script>
 <script src="bower_components/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
@@ -65,8 +63,6 @@ You can include the plugin like so:
 
 ```html
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/URIjs/src/URI.min.js"></script>
-<script src="node_modules/jsonproxy/jsonp.js"></script>
 <script src="node_modules/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
@@ -76,12 +72,10 @@ Download and extract this repository to the root of your web application.
 
 For example, if I was to take this approach,I would download this repository to a 'js/libraries' folder.
 
-Include jQuery, URIjs, jsonproxy, and the plugin in the head or footer of your page.
+Include jQuery, ~~URIjs, jsonproxy,~~ and the plugin in the head or footer of your page.
 
 ```html
 <script src="js/libraries/jquery/dist/jquery.min.js"></script>
-<script src="js/libraries/URIjs/src/URI.min.js"></script>
-<script src="js/libraries/jsonproxy/jsonp.js"></script>
 <script src="js/libraries/open-weather-updated/build/openWeather.min.js"></script>
 ```
 
